@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data = JSON.parse(responseText);
                 } catch (e) {
                     if (registerError) {
-                        registerError.textContent = `Server response: ${responseText || response.statusText}`;
+                        registerError.textContent = `Something went wrong.`;
                         registerError.style.display = "block";
                     }
                     console.error("Raw server response:", responseText);
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     data = JSON.parse(responseText);
                 } catch (e) {
                     if (loginError) {
-                        loginError.textContent = `Server response: ${responseText || response.statusText}`;
+                        loginError.textContent = `Something went wrong.`;
                         loginError.style.display = "block";
                     }
                     console.error("Raw server response:", responseText);
