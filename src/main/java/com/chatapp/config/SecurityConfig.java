@@ -36,7 +36,7 @@ public class SecurityConfig {
                                                    CustomUserDetailsService userDetailsService,
                                                    PasswordEncoder passwordEncoder) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable).cors(cors -> {})
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/", "/index.html", "/login.html", "/register.html",
