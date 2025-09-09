@@ -1,0 +1,10 @@
+services:
+  mysql:
+    image: 'mysql:latest'
+    environment:
+      - 'MYSQL_DATABASE=chat_application'
+      - 'MYSQL_PASSWORD=admin@123'
+      - 'MYSQL_ROOT_PASSWORD=admin@123'
+      - 'MYSQL_USER=root'
+    ports:
+      - '3306'

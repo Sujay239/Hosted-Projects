@@ -1,0 +1,160 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f2027, #2c5364, #00fff7 80%);
+    font-family: 'Orbitron', Arial, sans-serif;
+    overflow: hidden;
+}
+
+.container {
+    background: rgba(20, 20, 40, 0.7);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 370px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    animation: neonGlow 6s infinite alternate;
+}
+
+@keyframes neonGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px #00fff7, 0 0 20px #00fff7;
+    }
+
+    50% {
+        box-shadow: 0 0 20px #00fff7, 0 0 40px #00fff7;
+    }
+}
+
+.title {
+    color: #00fff7;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #00fff7;
+}
+
+.form {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    animation: fadeIn 0.7s;
+}
+
+.form.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    margin-bottom: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s, background 0.3s;
+    box-shadow: 0 0 0 0 #00fff7;
+}
+
+.input:focus {
+    box-shadow: 0 0 8px 2px #00fff7;
+    background: rgba(0, 255, 247, 0.08);
+}
+
+.button {
+    width: 100%;
+    padding: 0.9rem 0;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #00fff7, #2c5364);
+    color: #0f2027;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    box-shadow: 0 0 10px #00fff7;
+    transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+.button:hover {
+    background: linear-gradient(90deg, #2c5364, #00fff7);
+    color: #fff;
+    box-shadow: 0 0 20px #00fff7;
+}
+
+.switch-text {
+    color: #fff;
+    font-size: 0.95rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.switch-link {
+    color: #00fff7;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-left: 0.3rem;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 98vw;
+        min-width: 0;
+        padding: 1.2rem 0.5rem;
+        border-radius: 10px;
+    }
+
+    .title {
+        font-size: 1.2rem;
+    }
+
+    .input,
+    .button {
+        font-size: 0.95rem;
+        padding: 0.7rem 0.7rem;
+    }
+
+    .switch-text {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .container {
+        padding: 0.5rem 0.2rem;
+    }
+
+    .title {
+        font-size: 1rem;
+    }
+}
+
+.input{
+    box-sizing: border-box;
+}

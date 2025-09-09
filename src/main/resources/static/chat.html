@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Secure Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css?family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/chatapp.css" />
+    <style>
+        /* Sidebar header with logo + title */
+
+
+    </style>
+    <link type="image/png" sizes="32x32" rel="icon" href="https://freeimghost.net/images/2025/09/09/icon.png" />
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2/lib/stomp.min.js"></script>
+</head>
+<body>
+<div class="chat-container">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <a href="chat.html" style="text-decoration: none">
+                <span><img src="https://freeimghost.net/images/2025/09/09/icon.png" alt="icon" class="sidebar-logo" style="padding-right: 5px; vertical-align: middle"></span>
+                <span class="sidebar-title">Secure Chat</span>
+            </a>
+            <h4 id="user"></h4>
+        </div>
+        <h2>Rooms</h2>
+        <div class="rooms-list" id="rooms-list"></div>
+
+        <div class="private-section">
+            <h2 style="font-size:1.1rem; margin-bottom:0.7rem;">Users</h2>
+            <div id="private-users-list"></div>
+        </div>
+
+<!--        <img src="https://freeimghost.net/images/2025/09/09/leave-room.png" alt="leave room" border="0">-->
+<!--        <img src="https://freeimghost.net/images/2025/09/09/logout.png" alt="logout" border="0">-->
+
+        <button class="send-btn" type="button" id="log-out">
+            <span><img src="https://freeimghost.net/images/2025/09/09/logout.png" alt=""></span>
+            Log out
+        </button>
+    </div>
+
+    <div class="main-chat">
+        <div class="chat-header">
+            <div id="chat-header">
+                <span id="welcome-text" style="animation: neon-flash 4s infinite alternate">Welcome</span>
+                <div class="room-menu">
+                    <button onclick="toggleDropdown()" id="roomMenuBtn">＋</button>
+                    <div id="roomDropdown">
+                        <<button onclick="openModal('createRoomModal')">➕ Create Room</button>
+                        <button onclick="openModal('joinRoomModal')">🔗 Join Room</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="messages-area centered" id="messages-area">
+            <div class="welcome-message" id="welcome-message">
+                Welcome to Chat App created by Sujay Kumar Kotal
+            </div>
+        </div>
+
+        <form class="chat-input-area" id="chat-form" autocomplete="off">
+            <input class="chat-input" id="chat-input" type="text" placeholder="Type your message..." required disabled />
+            <button class="send-btn" type="submit" disabled>Send</button>
+        </form>
+    </div>
+</div>
+
+<!-- Create Room Modal -->
+<div id="createRoomModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('createRoomModal')">&times;</span>
+        <h2>Create Room</h2>
+        <form id="create-room-form">
+            <h5 style="color: #00fff7;text-shadow: 0 0 12px #00fff7;">Room Name</h5>
+            <input type="text" id="create-room-input" placeholder="Enter room name..." required />
+            <h5 style="color: #00fff7;text-shadow: 0 0 12px #00fff7;">Room Description</h5>
+            <input type="text" id="Description" placeholder="Enter room description..." required />
+            <div id="create-room-error"></div>
+            <button type="submit" class="send-btn">Create</button>
+        </form>
+    </div>
+</div>
+
+<!-- Join Room Modal -->
+<div id="joinRoomModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('joinRoomModal')">&times;</span>
+        <h2>Join Room</h2>
+        <form id="join-room-form">
+            <input type="text" id="join-room-input" placeholder="Enter room ID..." required />
+            <button type="submit" onclick="joinRoomFromInput()" id = "joinRoomBtn" class="send-btn">Join</button>
+        </form>
+    </div>
+</div>
+
+<!-- Room Info Popup -->
+<div id="room-info-popup" class="room-info" style="font-family: sans-serif">
+    <h3 id="room-title" style="font-weight: bold"></h3>
+    <p id="roomIdd">
+        <strong>Room ID : </strong>
+        <span id="roomId"></span>
+    </p>
+    <button id="copyBtn" style="width: 100%">Copy</button>
+    <p><strong>Description: </strong> <span id="room-desc"></span></p>
+    <p><strong>Participants: </strong> <span id="room-participants"></span></p>
+    <p><strong>Created By: </strong> <span id="room-creator"></span></p>
+    <button onclick="closeRoomInfo()" style="width: 100%">Close</button>
+</div>
+
+
+</body>
+<script>
+
+    // Dropdown menu functionality
+    function toggleDropdown() {
+        document.getElementById("roomDropdown").classList.toggle("show");
+    }
+
+    window.addEventListener("click", function (e) {
+        if (!e.target.matches("#roomMenuBtn")) {
+            document.getElementById("roomDropdown").classList.remove("show");
+        }
+    });
+
+
+    function openModal(id) {
+        document.getElementById(id).style.display = "flex";
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).style.display = "none";
+    }
+
+    // Close modal if user clicks outside content
+    window.onclick = function(event) {
+        if (event.target.classList.contains("modal")) {
+            event.target.style.display = "none";
+        }
+    };
+
+
+</script>
+<script src="js/chatapp.js"></script>
+</html>
