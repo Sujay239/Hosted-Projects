@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const loginError = document.getElementById('login-error');
 
     let isLogin = true;
+    const BACKEND_URL = "https://hosted-projects-production.up.railway.app";
 
     // Check if essential elements exist
     if (!loginForm || !registerForm || !switchText || !formTitle) {
@@ -84,16 +85,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             try {
-                const response = await fetch("/api/auth/register", {
+                const response = await fetch(`${BACKEND_URL}/api/auth/register`, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         username: registerUsername.value,
                         email: registerEmail.value,
                         password: registerPassword.value
-                    })
+                    }),
+                    credentials: 'include' // if your backend uses sessions/cookies
                 });
 
                 if (!response) {
@@ -156,15 +156,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             try {
-                const response = await fetch("/api/auth/login", {
+                const response = await fetch(`${BACKEND_URL}/api/auth/login`, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
                         username: loginUsername.value,
                         password: loginPassword.value
-                    })
+                    }),
+                    credentials: 'include'
                 });
 
                 const responseText = await response.text();
