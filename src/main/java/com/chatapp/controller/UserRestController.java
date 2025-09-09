@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "https://sujay-secure-chatapp.netlify.app/", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = "https://sujay-secure-chatapp.netlify.app", allowedHeaders = "*", allowCredentials = "true")
 public class UserRestController {
 
     private final UserService userService;

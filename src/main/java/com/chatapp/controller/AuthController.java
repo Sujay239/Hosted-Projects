@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "https://sujay-secure-chatapp.netlify.app/", allowedHeaders = "*", allowCredentials = "true") // allow frontend calls
+@CrossOrigin(origins = "https://sujay-secure-chatapp.netlify.app", allowedHeaders = "*", allowCredentials = "true") // allow frontend calls
 public class AuthController {
     private final AuthService authService;
     @Autowired

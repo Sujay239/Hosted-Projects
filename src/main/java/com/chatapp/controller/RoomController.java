@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/rooms")
-@CrossOrigin(origins = "https://sujay-secure-chatapp.netlify.app/", allowedHeaders = "*", allowCredentials = "true")
+@CrossOrigin(origins = "https://sujay-secure-chatapp.netlify.app", allowedHeaders = "*", allowCredentials = "true")
 public class RoomController {
 
 @Autowired

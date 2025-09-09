@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const response = await fetch("api/rooms/create", {
+            const response = await fetch(`api/rooms/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
