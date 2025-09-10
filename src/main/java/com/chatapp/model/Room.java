@@ -43,17 +43,5 @@ public class Room {
         this.participants.add(createdBy); // Add creator as participant
     }
 
-    // Helper methods
-    public void addParticipant(String username) {
-        this.participants.add(username);
-    }
-
-    public void removeParticipant(String username) {
-        this.participants.remove(username);
-    }
-
-    public boolean hasAccess(String username) {
-        return this.participants.contains(username);
-    }
 
 }

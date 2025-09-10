@@ -48,41 +48,33 @@ public class RoomController {
                                        @RequestBody Map<String, String> payload) {
         String username = payload.get("username");
 
-        // return roomRepository.findById(roomId)
-        //         .map(room -> {
-        //             if (room.getParticipants().contains(username)) {
-        //                 room.getParticipants().remove(username);
-        //                 roomRepository.save(room);
-        //                 return ResponseEntity.ok("User removed from room");
-        //             } else {
-        //                 return ResponseEntity.badRequest().body("User not in this room");
-        //             }
-        //         })
-        //         .orElse(ResponseEntity.notFound().build());
-
-        Optional<Room> room = roomRepository.findById(roomId);
-        if (room.isPresent()) {
-            Room curreRoom = room.get();
-           Set<String> users =  curreRoom.getParticipants();
-            if (users.contains(username)) {
-                if(users.size() == 1){
-                    curreRoom.setParticipants(new HashSet<>());
-                    roomRepository.save(curreRoom);
-                }
-//                users.remove(username);
-                if (curreRoom.getParticipants().isEmpty()) {
-                    roomRepository.deleteById(roomId);
-                } else {
-                    roomRepository.save(curreRoom);
-                }
-                return ResponseEntity.ok("You are successfully leaved the room.");
-            } else {
-                return ResponseEntity.badRequest().body("User not in this room");
-            }
-        } else {
+        Optional<Room> roomOpt = roomRepository.findById(roomId);
+        if (roomOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
+        Room currentRoom = roomOpt.get();
+        Set<String> users = currentRoom.getParticipants();
+
+        if (!users.contains(username)) {
+            return ResponseEntity.badRequest().body("User not in this room");
+        }
+
+        // Remove the user
+        users.remove(username);
+
+        if (users.isEmpty()) {
+            // Delete room if no participants left
+            roomRepository.deleteById(roomId);
+            return ResponseEntity.ok("Room deleted as no participants remain.");
+        } else {
+            // Save updated room
+            currentRoom.setParticipants(users);
+            roomRepository.save(currentRoom);
+            return ResponseEntity.ok("You successfully left the room.");
+        }
     }
+
 
     @GetMapping("/{roomId}")
     public ResponseEntity<Room> getRoomById(@PathVariable String roomId) {
