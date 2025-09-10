@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/rooms")
@@ -68,8 +65,12 @@ public class RoomController {
             Room curreRoom = room.get();
            Set<String> users =  curreRoom.getParticipants();
             if (users.contains(username)) {
-                users.remove(username);
-                if (users.size() == 0) {
+                if(users.size() == 1){
+                    curreRoom.setParticipants(new HashSet<>());
+                    roomRepository.save(curreRoom);
+                }
+//                users.remove(username);
+                if (curreRoom.getParticipants().isEmpty()) {
                     roomRepository.deleteById(roomId);
                 } else {
                     roomRepository.save(curreRoom);
