@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let  roomId = null;
     let activePrivateChatUser = null;
     window.activeRoom = null;
+    const BACKEND_URL = "https://hosted-projects-production.up.railway.app";
 
     const currentUsername = localStorage.getItem('username') || 'User';
     const token = localStorage.getItem('token');

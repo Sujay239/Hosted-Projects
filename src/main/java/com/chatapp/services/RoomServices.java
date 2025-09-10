@@ -53,7 +53,7 @@ public class RoomServices {
         }
     }
 
-public List<Room> findRoomsByParticipant(String user) {
+public Set<Room> findRoomsByParticipant(String user) {
     return roomRepository.findByParticipant(user);
 }
 

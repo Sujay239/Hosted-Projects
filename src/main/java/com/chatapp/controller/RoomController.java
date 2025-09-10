@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/rooms")
@@ -34,7 +36,7 @@ public class RoomController {
     }
 
     @GetMapping("/my")
-    public ResponseEntity<List<Room>> getMyRooms(@RequestParam("user") String name) {
+    public ResponseEntity<Set<Room>> getMyRooms(@RequestParam("user") String name) {
         return ResponseEntity.ok(roomServices.findRoomsByParticipant(name));
     }
 
@@ -49,17 +51,36 @@ public class RoomController {
                                        @RequestBody Map<String, String> payload) {
         String username = payload.get("username");
 
-        return roomRepository.findById(roomId)
-                .map(room -> {
-                    if (room.getParticipants().contains(username)) {
-                        room.getParticipants().remove(username);
-                        roomRepository.save(room);
-                        return ResponseEntity.ok("User removed from room");
-                    } else {
-                        return ResponseEntity.badRequest().body("User not in this room");
-                    }
-                })
-                .orElse(ResponseEntity.notFound().build());
+        // return roomRepository.findById(roomId)
+        //         .map(room -> {
+        //             if (room.getParticipants().contains(username)) {
+        //                 room.getParticipants().remove(username);
+        //                 roomRepository.save(room);
+        //                 return ResponseEntity.ok("User removed from room");
+        //             } else {
+        //                 return ResponseEntity.badRequest().body("User not in this room");
+        //             }
+        //         })
+        //         .orElse(ResponseEntity.notFound().build());
+
+        Optional<Room> room = roomRepository.findById(roomId);
+        if (room.isPresent()) {
+            Room curreRoom = room.get();
+           Set<String> users =  curreRoom.getParticipants();
+            if (users.contains(username)) {
+                users.remove(username);
+                if (users.size() == 0) {
+                    roomRepository.deleteById(roomId);
+                } else {
+                    roomRepository.save(curreRoom);
+                }
+                return ResponseEntity.ok("You are successfully leaved the room.");
+            } else {
+                return ResponseEntity.badRequest().body("User not in this room");
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/{roomId}")
